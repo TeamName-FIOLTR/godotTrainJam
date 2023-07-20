@@ -7,6 +7,8 @@ var time : float
 var original
 func _start():
 	original = self.transform.origin
+	self.transform.origin
+
 func _process(delta):
 	time += delta 
 	if original:

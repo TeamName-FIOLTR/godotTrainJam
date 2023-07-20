@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bepaluowuy0co"]
+
+[ext_resource type="Script" path="res://scenes/spidorIK/spidorIK.gd" id="1_2iy1s"]
+
+[node name="SpiderLegSelection" type="SkeletonIK3D"]
+script = ExtResource("1_2iy1s")
