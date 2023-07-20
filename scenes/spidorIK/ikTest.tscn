@@ -1,10 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3p3fr6cu55p3"]
+[gd_scene load_steps=14 format=3 uid="uid://b3p3fr6cu55p3"]
 
 [ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
 [ext_resource type="Script" path="res://scenes/spidorIK/ikSpider.gd" id="1_c15jh"]
 [ext_resource type="PackedScene" uid="uid://bepaluowuy0co" path="res://scenes/spidorIK/spider_leg_selection.tscn" id="2_2uwge"]
 [ext_resource type="Script" path="res://scenes/spidorIK/AnimationPlayer.gd" id="3_vgqv0"]
-[ext_resource type="PackedScene" path="res://@RayCast3D@2.tscn" id="5_wa8pq"]
+[ext_resource type="PackedScene" uid="uid://dfassnfjoe5jb" path="res://@RayCast3D@2.tscn" id="5_wa8pq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mo2qk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -19,31 +19,31 @@ sky = SubResource("Sky_nu7ve")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jktnt"]
+albedo_color = Color(0.431373, 1, 0.733333, 1)
+metallic = 1.0
+metallic_specular = 0.52
+roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tj7x"]
+albedo_color = Color(1, 0.54902, 0.341176, 1)
+emission_enabled = true
+emission = Color(1, 0.415686, 0, 1)
+emission_energy_multiplier = 7.82
+
 [sub_resource type="Animation" id="Animation_i18g7"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CSGSphere3D:position")
+tracks/0/path = NodePath("mainspiderthingig:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, -6.91388, 14.94)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CSGSphere3D:layers")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
+"values": [Vector3(0, -9.46331e-07, 1.89266e-06)]
 }
 
 [sub_resource type="Animation" id="Animation_7oace"]
@@ -52,26 +52,14 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CSGSphere3D:position")
+tracks/0/path = NodePath("mainspiderthingig:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, -6.91388, 14.94), Vector3(-17.1445, -6.91388, 3.88161), Vector3(14.4055, -6.91388, -7.17684), Vector3(0, -6.91388, -21.9214)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CSGSphere3D:layers")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.3, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [1, 1]
+"values": [Vector3(0, -9.46331e-07, 1.89266e-06), Vector3(0, 5, 0), Vector3(0, -9.46331e-07, 1.89266e-06)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qwbde"]
@@ -98,11 +86,15 @@ shadow_enabled = true
 environment = SubResource("Environment_q0053")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.987494, 0.157107, -0.0131706, 0.153978, 0.979016, 0.133484, 0.0338656, 0.129787, -0.990963, 0, 7.90433, -31.5657)
+transform = Transform3D(-0.97989, 0.155897, -0.0130692, 0.136131, 0.890527, 0.416039, 0.0770915, 0.409043, -0.900777, 0, 15.9609, -31.5657)
 current = true
 
 [node name="mainspiderthingig" parent="." instance=ExtResource("1_buafi")]
 transform = Transform3D(1.11924, 0, 0, 0, 1.11924, 0, 0, 0, 1.11924, 0, -9.46331e-07, 1.89266e-06)
+
+[node name="8legts" parent="mainspiderthingig/Exoskeleton Rig/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_jktnt")
+surface_material_override/1 = SubResource("StandardMaterial3D_0tj7x")
 
 [node name="targets" type="Node3D" parent="."]
 top_level = true

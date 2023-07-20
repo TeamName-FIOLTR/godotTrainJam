@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/spidorIK/spidorIK.gd" id="1_2iy1s"]
 
 [node name="SpiderLegSelection" type="SkeletonIK3D"]
+process_priority = 1
 use_magnet = true
 magnet = Vector3(0, 10, 0)
 script = ExtResource("1_2iy1s")

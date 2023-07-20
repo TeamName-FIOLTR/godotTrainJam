@@ -1,5 +1,7 @@
 extends Node3D
 
+class_name Spidor 
+
 @export var skele  : Skeleton3D
 @export var targets : Node3D 
 @export var raycasts : Node3D
@@ -14,12 +16,18 @@ extends Node3D
 @export_range(0,1) var leg_offset : float 
 
 
+
+var average_normal : Vector3 = Vector3.UP
+
 func add_ik(i,lr):
 	var ik_local = self.ik.instantiate()
+	ik_local.spidor = self
 	ik_local.root_bone = StringName(  "Leg " + str(i) + " 0 " + lr ) 
 	ik_local.tip_bone = StringName(  "Leg " + str(i) + " Target " + lr ) 
 	
 	var target = Node3D.new()
+	var sphear = CSGSphere3D.new()
+	target.add_child(sphear)
 
 	var raycast =RayCast3D.new()
 
@@ -27,6 +35,7 @@ func add_ik(i,lr):
 	targets.add_child(target)
 	ik_local.target_node = target.get_path()
 
+	ik_local.ik_target = target
 	var angle = float(i)/leg_count 
 	angle = remap(angle,0,1,PI/4,2*PI)
 	var offset = leg_offset*PI
@@ -38,9 +47,12 @@ func add_ik(i,lr):
 	raycasts.add_child(raycast)
 
 	raycast.transform.origin.y += 10
-	raycast.target_position = Vector3(0,-100,0)
-	raycast.look_at(target.transform.origin)
+	raycast.target_position = (target.global_transform.origin - raycast.global_transform.origin)*2
+	#raycast.target_position = Vector3(0,-100,0)
+	#raycast.look_at(target.transform.origin)
 	
+	ik_local.raycast = raycast 
+
 	skele.add_child(ik_local)
 
 # Called when the node enters the scene tree for the first time.
