@@ -17,6 +17,6 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1, 0, 5)
 shape = SubResource("ConcavePolygonShape3D_up4bj")
 
 [node name="Spider" parent="." instance=ExtResource("2_4gpau")]
-transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 19.3116, 2.56426, 3.77563)
+transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, -9.84887, 2.56426, 72.9782)
 
 [editable path="wavything"]
