@@ -11,6 +11,7 @@ func update_position()->void:
 	if raycast.is_colliding():
 		var ray_normal = raycast.get_collision_normal()
 		spidor.average_normal  = (spidor.average_normal*spidor.leg_count - prev_normal + ray_normal)/spidor.leg_count
+		spidor.align_to_average_norm()
 		ik_target.global_position = raycast.get_collision_point()
 		prev_normal = ray_normal 
 

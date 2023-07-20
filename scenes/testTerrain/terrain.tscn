@@ -16,7 +16,19 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1, 0, 5)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wavything/Cube/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_up4bj")
 
+[node name="wavything2" parent="." instance=ExtResource("1_g1mll")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1, 0, 278.056)
+
+[node name="Cube" parent="wavything2" index="0"]
+transform = Transform3D(1, 0, 0, 0, -0.177686, 0.984087, 0, -0.984087, -0.177686, 0, 33.0032, -44.9257)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="wavything2/Cube" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wavything2/Cube/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_up4bj")
+
 [node name="Spider" parent="." instance=ExtResource("2_4gpau")]
-transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, -9.84887, 2.56426, 72.9782)
+transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 34.6214, 15.1877, 18.5158)
 
 [editable path="wavything"]
+[editable path="wavything2"]

@@ -2,6 +2,9 @@ extends Node3D
 
 class_name Spidor 
 
+
+var originial_transform : Transform3D
+
 @export var skele  : Skeleton3D
 @export var targets : Node3D 
 @export var raycasts : Node3D
@@ -16,8 +19,10 @@ class_name Spidor
 @export_range(0,1) var leg_offset : float 
 
 
-
 var average_normal : Vector3 = Vector3.UP
+func align_to_average_norm()->void:
+	global_transform = originial_transform.looking_at(global_position + average_normal)
+
 
 func add_ik(i,lr):
 	var ik_local = self.ik.instantiate()
@@ -57,6 +62,7 @@ func add_ik(i,lr):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	originial_transform = self.global_transform
 	for i in range(leg_count / 2):
 		#left 
 		add_ik(i,"L")
