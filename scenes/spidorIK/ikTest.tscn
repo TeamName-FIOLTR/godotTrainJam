@@ -1,0 +1,141 @@
+[gd_scene load_steps=10 format=3 uid="uid://b3p3fr6cu55p3"]
+
+[ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
+[ext_resource type="Script" path="res://scenes/spidorIK/spidorIK.gd" id="2_1mttr"]
+[ext_resource type="Script" path="res://scenes/spidorIK/AnimationPlayer.gd" id="3_vgqv0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mo2qk"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_nu7ve"]
+sky_material = SubResource("ProceduralSkyMaterial_mo2qk")
+
+[sub_resource type="Environment" id="Environment_q0053"]
+background_mode = 2
+sky = SubResource("Sky_nu7ve")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Animation" id="Animation_2rp6u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left 0 Target:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-16.5537, -1.04372, -15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Left 0 Target:gizmo_extents")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.25]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Left 0 Target:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -3.95317)]
+}
+
+[sub_resource type="Animation" id="Animation_28d7h"]
+resource_name = "new_animation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left 0 Target:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-16.5537, -1.04372, -15), Vector3(-11.8923, -1.04372, -2.06609), Vector3(-16.5537, -1.04372, -15), Vector3(-16.5537, -1.04372, -15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Left 0 Target:gizmo_extents")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.25, 0.25, 0.25]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Left 0 Target:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.5, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.0959931, 0.20944, -3.95317), Vector3(-0.0959931, 0, -3.95317), Vector3(0, 0, -3.95317)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uokty"]
+_data = {
+"RESET": SubResource("Animation_2rp6u"),
+"new_animation": SubResource("Animation_28d7h")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q0053")
+
+[node name="mainspiderthingig" parent="." instance=ExtResource("1_buafi")]
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="mainspiderthingig/Exoskeleton Rig/Skeleton3D" index="1"]
+process_priority = 1
+root_bone = &"Leg 0 0 L"
+tip_bone = &"Leg 0 Target L"
+use_magnet = true
+magnet = Vector3(0, 10, 0)
+target_node = NodePath("../../../../Left 0 Target")
+script = ExtResource("2_1mttr")
+
+[node name="Left 0 Target" type="Marker3D" parent="."]
+transform = Transform3D(-0.688355, -0.725374, 0, 0.725374, -0.688355, 0, 0, 0, 1, -16.5537, -1.04372, -15)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Left 0 Target"]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.987494, 0.157107, -0.0131706, 0.153978, 0.979016, 0.133484, 0.0338656, 0.129787, -0.990963, 0, 7.90433, -31.5657)
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uokty")
+}
+script = ExtResource("3_vgqv0")
+
+[editable path="mainspiderthingig"]
