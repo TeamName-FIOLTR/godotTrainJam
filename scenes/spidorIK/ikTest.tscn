@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3p3fr6cu55p3"]
+[gd_scene load_steps=12 format=3 uid="uid://b3p3fr6cu55p3"]
 
 [ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
 [ext_resource type="Script" path="res://scenes/spidorIK/ikSpider.gd" id="1_c15jh"]
 [ext_resource type="PackedScene" uid="uid://bepaluowuy0co" path="res://scenes/spidorIK/spider_leg_selection.tscn" id="2_2uwge"]
 [ext_resource type="Script" path="res://scenes/spidorIK/AnimationPlayer.gd" id="3_vgqv0"]
+[ext_resource type="PackedScene" path="res://@RayCast3D@2.tscn" id="5_wa8pq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mo2qk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -79,11 +80,12 @@ _data = {
 "new_animation": SubResource("Animation_7oace")
 }
 
-[node name="Spider" type="Node3D" node_paths=PackedStringArray("skele", "targets")]
+[node name="Spider" type="Node3D" node_paths=PackedStringArray("skele", "targets", "raycasts")]
 transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 0, 0, 0)
 script = ExtResource("1_c15jh")
 skele = NodePath("mainspiderthingig/Exoskeleton Rig/Skeleton3D")
 targets = NodePath("targets")
+raycasts = NodePath("raycasts")
 ik = ExtResource("2_2uwge")
 leg_count = 8
 leg_offset = 0.4
@@ -103,6 +105,9 @@ current = true
 transform = Transform3D(1.11924, 0, 0, 0, 1.11924, 0, 0, 0, 1.11924, 0, -9.46331e-07, 1.89266e-06)
 
 [node name="targets" type="Node3D" parent="."]
+top_level = true
+
+[node name="raycasts" type="Node3D" parent="."]
 
 [node name="MoveThingy" type="AnimationPlayer" parent="."]
 
@@ -114,5 +119,7 @@ libraries = {
 "": SubResource("AnimationLibrary_qwbde")
 }
 script = ExtResource("3_vgqv0")
+
+[node name="raycasts2" parent="." instance=ExtResource("5_wa8pq")]
 
 [editable path="mainspiderthingig"]

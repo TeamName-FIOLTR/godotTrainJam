@@ -1,7 +1,8 @@
 extends Node3D
 
 @export var skele  : Skeleton3D
-@export var targets : Node3D
+@export var targets : Node3D 
+@export var raycasts : Node3D
 @export var ik : PackedScene
 
 
@@ -19,6 +20,9 @@ func add_ik(i,lr):
 	ik_local.tip_bone = StringName(  "Leg " + str(i) + " Target " + lr ) 
 	
 	var target = Node3D.new()
+
+	var raycast =RayCast3D.new()
+
 	target.name = "Leg " + str(i) + " target"
 	targets.add_child(target)
 	ik_local.target_node = target.get_path()
@@ -29,7 +33,16 @@ func add_ik(i,lr):
 	target.transform.origin.x = cos(angle + offset)*19 * (1 if lr == 'L' else -1)
 	target.transform.origin.z = -sin(angle + offset)*19
 
+
+
+	raycasts.add_child(raycast)
+
+	raycast.transform.origin.y += 10
+	raycast.target_position = Vector3(0,-100,0)
+	raycast.look_at(target.transform.origin)
+	
 	skele.add_child(ik_local)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(leg_count / 2):
