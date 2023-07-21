@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnmgyjmjdg7xd"]
+
+[ext_resource type="PackedScene" uid="uid://1o3xhd4dai7n" path="res://assets/models/test/curvetestexport.glb" id="1_u4nst"]
+
+[sub_resource type="Curve3D" id="Curve3D_vng7g"]
+_data = {
+"points": PackedVector3Array(-500.0, 0.0, 500.0, 500.0, 0.0, -500.0, -1000.0, 0.0, -0.0, -1000.0, 0.0, -0.0, 1000.0, 0.0, -0.0, 1000.0, 0.0, -0.0),
+"tilts": PackedFloat32Array(0.0, 0.0)
+}
+point_count = 2
+
+[node name="Bezier Test" type="Node3D"]
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_vng7g")
+
+[node name="curvetestexport" parent="." instance=ExtResource("1_u4nst")]
+
+[editable path="curvetestexport"]
