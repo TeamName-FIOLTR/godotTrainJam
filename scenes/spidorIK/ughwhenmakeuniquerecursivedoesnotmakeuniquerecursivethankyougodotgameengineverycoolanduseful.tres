@@ -1,0 +1,110 @@
+[gd_resource type="VisualShader" load_steps=15 format=3 uid="uid://c1affo78f5dak"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_jmvlt"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_g6y6n"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_60b70"]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_724do"]
+function = 17
+
+[sub_resource type="VisualShaderNodeCompare" id="VisualShaderNodeCompare_u3eyh"]
+default_input_values = [0, 0.0, 1, 0.5, 2, 1e-05]
+function = 5
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_oyxij"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(30, 30)]
+op_type = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_8vrps"]
+input_name = "front_facing"
+
+[sub_resource type="VisualShaderNodeSwitch" id="VisualShaderNodeSwitch_hnwcb"]
+default_input_values = [0, false, 1, Vector3(1, 1, 1), 2, Vector3(0, 0, 0)]
+op_type = 4
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_gmm1b"]
+constant = Color(0, 0, 1, 1)
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_07mk4"]
+constant = Color(1, 0, 0, 1)
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_fgneo"]
+constant = 0.5
+
+[sub_resource type="VisualShaderNodeSwitch" id="VisualShaderNodeSwitch_wr5vb"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_gkxrq"]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_yhps4"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+
+void fragment() {
+// Input:2
+	bool n_out2p0 = FRONT_FACING;
+
+
+// ColorConstant:4
+	vec4 n_out4p0 = vec4(0.000000, 0.000000, 1.000000, 1.000000);
+
+
+// ColorConstant:5
+	vec4 n_out5p0 = vec4(1.000000, 0.000000, 0.000000, 1.000000);
+
+
+	vec3 n_out3p0;
+// Switch:3
+	n_out3p0 = mix(vec3(n_out5p0.xyz), vec3(n_out4p0.xyz), float(n_out2p0));
+
+
+// FloatConstant:6
+	float n_out6p0 = 0.500000;
+
+
+// Output:0
+	ALBEDO = n_out3p0;
+	ALPHA = n_out6p0;
+
+
+}
+"
+graph_offset = Vector2(-599.822, 55.6142)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_8vrps")
+nodes/fragment/2/position = Vector2(-1340, 260)
+nodes/fragment/3/node = SubResource("VisualShaderNodeSwitch_hnwcb")
+nodes/fragment/3/position = Vector2(-900, 340)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_gmm1b")
+nodes/fragment/4/position = Vector2(-1080, 420)
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorConstant_07mk4")
+nodes/fragment/5/position = Vector2(-1080, 520)
+nodes/fragment/6/node = SubResource("VisualShaderNodeFloatConstant_fgneo")
+nodes/fragment/6/position = Vector2(-700, 440)
+nodes/fragment/7/node = SubResource("VisualShaderNodeSwitch_wr5vb")
+nodes/fragment/7/position = Vector2(-420, 520)
+nodes/fragment/8/node = SubResource("VisualShaderNodeInput_gkxrq")
+nodes/fragment/8/position = Vector2(-1240, 820)
+nodes/fragment/9/node = SubResource("VisualShaderNodeVectorDecompose_yhps4")
+nodes/fragment/9/position = Vector2(-720, 720)
+nodes/fragment/10/node = SubResource("VisualShaderNodeFloatOp_jmvlt")
+nodes/fragment/10/position = Vector2(-480, 760)
+nodes/fragment/11/node = SubResource("VisualShaderNodeFloatOp_g6y6n")
+nodes/fragment/11/position = Vector2(-320, 700)
+nodes/fragment/12/node = SubResource("VisualShaderNodeInput_60b70")
+nodes/fragment/12/position = Vector2(-680, 900)
+nodes/fragment/13/node = SubResource("VisualShaderNodeFloatFunc_724do")
+nodes/fragment/13/position = Vector2(-160, 780)
+nodes/fragment/14/node = SubResource("VisualShaderNodeCompare_u3eyh")
+nodes/fragment/14/position = Vector2(100, 860)
+nodes/fragment/15/node = SubResource("VisualShaderNodeVectorOp_oyxij")
+nodes/fragment/15/position = Vector2(-900, 760)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 3, 1, 5, 0, 3, 2, 9, 0, 10, 0, 9, 1, 10, 1, 12, 0, 11, 1, 10, 0, 11, 0, 11, 0, 13, 0, 13, 0, 14, 0, 14, 0, 7, 0, 6, 0, 7, 1, 8, 0, 15, 0, 15, 0, 9, 0, 3, 0, 0, 0, 6, 0, 0, 1)

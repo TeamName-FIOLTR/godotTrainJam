@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://b3p3fr6cu55p3"]
+[gd_scene load_steps=20 format=3 uid="uid://b3p3fr6cu55p3"]
 
 [ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
 [ext_resource type="Script" path="res://scenes/spidorIK/ikSpider.gd" id="1_c15jh"]
 [ext_resource type="PackedScene" uid="uid://bepaluowuy0co" path="res://scenes/spidorIK/spider_leg_selection.tscn" id="2_2uwge"]
 [ext_resource type="Script" path="res://scenes/spidorIK/AnimationPlayer.gd" id="3_vgqv0"]
-[ext_resource type="PackedScene" uid="uid://dfassnfjoe5jb" path="res://@RayCast3D@2.tscn" id="5_wa8pq"]
+[ext_resource type="PackedScene" path="res://@RayCast3D@2.tscn" id="5_wa8pq"]
+[ext_resource type="Shader" uid="uid://c1affo78f5dak" path="res://scenes/spidorIK/ughwhenmakeuniquerecursivedoesnotmakeuniquerecursivethankyougodotgameengineverycoolanduseful.tres" id="6_2unrk"]
+[ext_resource type="Shader" uid="uid://cgk0mrlo428i5" path="res://scenes/spidorIK/planetestmaterial.tres" id="6_idl1e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mo2qk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -68,7 +70,21 @@ _data = {
 "new_animation": SubResource("Animation_7oace")
 }
 
-[node name="Spider" type="Node3D" node_paths=PackedStringArray("skele", "targets", "raycasts")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sb71f"]
+render_priority = 0
+shader = ExtResource("6_2unrk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5pv0p"]
+size = Vector2(30, 30)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tpdje"]
+render_priority = 0
+shader = ExtResource("6_idl1e")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_stuur"]
+size = Vector2(30, 30)
+
+[node name="Spidor" type="Node3D" node_paths=PackedStringArray("skele", "targets", "raycasts")]
 transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 0, 0, 0)
 script = ExtResource("1_c15jh")
 skele = NodePath("mainspiderthingig/Exoskeleton Rig/Skeleton3D")
@@ -113,5 +129,18 @@ libraries = {
 script = ExtResource("3_vgqv0")
 
 [node name="raycasts2" parent="." instance=ExtResource("5_wa8pq")]
+
+[node name="TestPlane" type="Marker3D" parent="."]
+
+[node name="NotTestPlaneDontAsk" type="CSGMesh3D" parent="TestPlane"]
+layers = 31
+sorting_offset = 100000.0
+sorting_use_aabb_center = false
+material_override = SubResource("ShaderMaterial_sb71f")
+mesh = SubResource("PlaneMesh_5pv0p")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="TestPlane"]
+material_override = SubResource("ShaderMaterial_tpdje")
+mesh = SubResource("PlaneMesh_stuur")
 
 [editable path="mainspiderthingig"]

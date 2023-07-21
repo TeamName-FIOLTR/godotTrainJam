@@ -1,0 +1,68 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://hogwyedhdvb8"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_oac8t"]
+input_name = "normal"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_86l15"]
+input_name = "inv_view_matrix"
+
+[sub_resource type="VisualShaderNodeTransformVecMult" id="VisualShaderNodeTransformVecMult_8knp3"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_8mb5s"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1)]
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_niabo"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(2, 2, 2)]
+operator = 3
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx, unshaded;
+
+
+
+
+void fragment() {
+// Input:3
+	mat4 n_out3p0 = INV_VIEW_MATRIX;
+
+
+// Input:2
+	vec3 n_out2p0 = NORMAL;
+
+
+// TransformVectorMult:4
+	vec3 n_out4p0 = (n_out3p0 * vec4(n_out2p0, 0.0)).xyz;
+
+
+// VectorOp:5
+	vec3 n_in5p1 = vec3(1.00000, 1.00000, 1.00000);
+	vec3 n_out5p0 = n_out4p0 + n_in5p1;
+
+
+// VectorOp:6
+	vec3 n_in6p1 = vec3(2.00000, 2.00000, 2.00000);
+	vec3 n_out6p0 = n_out5p0 / n_in6p1;
+
+
+// Output:0
+	ALBEDO = n_out6p0;
+
+
+}
+"
+graph_offset = Vector2(-273.601, 85.5694)
+flags/unshaded = true
+nodes/fragment/0/position = Vector2(780, 200)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_oac8t")
+nodes/fragment/2/position = Vector2(-260, 400)
+nodes/fragment/3/node = SubResource("VisualShaderNodeInput_86l15")
+nodes/fragment/3/position = Vector2(-260, 280)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTransformVecMult_8knp3")
+nodes/fragment/4/position = Vector2(100, 380)
+nodes/fragment/5/node = SubResource("VisualShaderNodeVectorOp_8mb5s")
+nodes/fragment/5/position = Vector2(364.025, 369.834)
+nodes/fragment/6/node = SubResource("VisualShaderNodeVectorOp_niabo")
+nodes/fragment/6/position = Vector2(533.025, 416.834)
+nodes/fragment/connections = PackedInt32Array(3, 0, 4, 0, 2, 0, 4, 1, 4, 0, 5, 0, 5, 0, 6, 0, 6, 0, 0, 0)
