@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://djgcrd2fy5n3h"]
+[gd_scene load_steps=12 format=3 uid="uid://djgcrd2fy5n3h"]
 
 [ext_resource type="PackedScene" uid="uid://dc5mks0f15ds2" path="res://assets/models/wavything.glb" id="1_g1mll"]
 [ext_resource type="PackedScene" uid="uid://b3p3fr6cu55p3" path="res://scenes/spidorIK/ikTest.tscn" id="2_4gpau"]
 [ext_resource type="Shader" uid="uid://hogwyedhdvb8" path="res://scenes/testTerrain/terrain_normal_test.tres" id="2_jq43v"]
+[ext_resource type="Texture2D" uid="uid://dw178hrf7sygj" path="res://assets/debug_texture.png" id="4_rmwcr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvatl"]
 render_priority = 0
@@ -14,6 +15,16 @@ data = PackedVector3Array(-50, 0, 50, -48.9899, 0, 48.9899, -48.9899, 0, 50, -50
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bbgom"]
 render_priority = 0
 shader = ExtResource("2_jq43v")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3yrq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bssro"]
+albedo_texture = ExtResource("4_rmwcr")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_coloq"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpfs7"]
 
 [node name="test scene" type="Node3D"]
 
@@ -40,9 +51,31 @@ surface_material_override/0 = SubResource("ShaderMaterial_bbgom")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="wavything2/Cube/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_up4bj")
 
-[node name="Spider" parent="." instance=ExtResource("2_4gpau")]
-transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 88.9997, 7.29278, 109.336)
+[node name="Spidor" parent="." instance=ExtResource("2_4gpau")]
+transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 207.747, 7.29278, 109.336)
 debug_mouse_sensitivity = 0.2
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29538, 3.05176e-05, -1.19379)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 185.381, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_f3yrq")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D/CollisionShape3D"]
+material_override = SubResource("StandardMaterial3D_bssro")
+mesh = SubResource("PlaneMesh_coloq")
+material = SubResource("StandardMaterial3D_tpfs7")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.195655, 0.980673, 0, -0.980673, 0.195655, 0, 0, 202.067)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 185.381, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_f3yrq")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D2/CollisionShape3D"]
+mesh = SubResource("PlaneMesh_coloq")
 
 [editable path="wavything"]
 [editable path="wavything2"]
