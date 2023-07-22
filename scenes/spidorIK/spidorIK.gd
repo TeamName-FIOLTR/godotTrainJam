@@ -27,14 +27,18 @@ var leg_step_time : float = 0.0
 func norm(x):
 	return exp(-x**2)
 
+#updates the array on the spidor containing our position
+#and used for computing the normal of the surface
+func update_leg_array(pos : Vector3)->void:
+	if left_leg: spidor.left_leg_positions[leg_index] = pos
+	else: spidor.right_leg_positions[leg_index] = pos
 func update_position()->void:
 	if raycast.is_colliding():
-		spidor.align_to_average_norm()
 		new_target_position = raycast.get_collision_point()
 		old_target_position = ik_target.global_position
 		old_spidor_position = spidor.global_position
-		if left_leg: spidor.left_leg_positions[leg_index] = raycast.get_collision_point()
-		else: spidor.right_leg_positions[leg_index] = raycast.get_collision_point()
+		update_leg_array(raycast.get_collision_point())
+		spidor.align_to_average_norm()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

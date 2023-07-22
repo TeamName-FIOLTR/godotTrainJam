@@ -25,15 +25,16 @@ var average_normal : Vector3 = Vector3.UP
 
 var prev_position : Vector3
 
+
 func align_to_average_norm()->void:
 	#global_transform = originial_transform.looking_at(global_position + average_normal)
 	var llp = left_leg_positions
 	var rlp = right_leg_positions
 	var norms = [
-		get_normal_of_points(llp[3],rlp[0],llp[0]),
-		get_normal_of_points(llp[3],rlp[1],llp[0]),
-		get_normal_of_points(llp[3],rlp[2],llp[0]),
-		get_normal_of_points(llp[3],rlp[3],llp[0]),
+		get_normal_of_points(llp[0],rlp[0],llp[3]),
+		get_normal_of_points(llp[0],rlp[1],llp[3]),
+		get_normal_of_points(llp[0],rlp[2],llp[3]),
+		get_normal_of_points(llp[0],rlp[3],llp[3]),
 		get_normal_of_points(rlp[3],llp[0],rlp[0]),
 		get_normal_of_points(rlp[3],llp[1],rlp[0]),
 		get_normal_of_points(rlp[3],llp[2],rlp[0]),
@@ -42,9 +43,33 @@ func align_to_average_norm()->void:
 #	print(get_normal_of_points(llp[3],rlp[2],llp[0]))
 #	print(norms)
 #	print(norms.reduce(func(accume, thing): return accume + thing, Vector3.ZERO).normalized())
-	var cooler_norm = norms.reduce(func(accume, thing): return accume + thing, Vector3.ZERO).normalized()
+	var cooler_norm : Vector3 = norms.reduce(func(accume, thing): return accume + thing, Vector3.ZERO).normalized()
+	
+	if cooler_norm == Vector3.ZERO: return 
+
 #	global_transform = originial_transform.looking_at(global_position + cooler_norm)
-	$TestPlane.global_transform.basis = originial_transform.basis.looking_at(cooler_norm)
+	#$TestPlane.global_transform.basis = originial_transform.basis.looking_at(cooler_norm)
+	#global_transform.basis = originial_transform.basis.looking_at(cooler_norm)
+
+	#print(cooler_norm)
+	var nz : Vector3 = -cooler_norm.cross(global_transform.basis.x).normalized()
+	var nx : Vector3= cooler_norm.cross(nz).normalized()
+
+	var b = Basis(nx,cooler_norm,nz)
+	
+	print('---')
+	print(nx)
+	print(cooler_norm)
+	print(nz)
+	print('---')
+
+
+	global_transform.basis = b#.orthonormalized()
+	
+	#global_transform.basis.y = cooler_norm 
+	#global_transform.basis.x = j
+	#global_transform.basis.z = k
+	
 	pass
 
 func get_normal_of_points(first : Vector3, second : Vector3, third : Vector3):
@@ -57,6 +82,8 @@ func add_ik(i,lr):
 	ik_local.root_bone = StringName(  "Leg " + str(i) + " 0 " + lr ) 
 	ik_local.tip_bone = StringName(  "Leg " + str(i) + " Target " + lr ) 
 	ik_local.leg_index = i
+
+
 	ik_local.left_leg = (lr == "L")
 	
 	var target = Node3D.new()
@@ -89,6 +116,8 @@ func add_ik(i,lr):
 
 	skele.add_child(ik_local)
 
+	ik_local.update_leg_array(ik_local.ik_target.global_position)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	originial_transform = self.global_transform
@@ -107,6 +136,6 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseMotion:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			global_position += debug_mouse_sensitivity*(Vector3(event.relative.x,event.relative.y, 0.0) if Input.is_key_pressed(KEY_SHIFT) else Vector3(event.relative.x,0.0,event.relative.y))
+			global_position += global_transform.basis*debug_mouse_sensitivity*(Vector3(event.relative.x,event.relative.y, 0.0))
 		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-			global_position += debug_mouse_sensitivity*(Vector3(event.relative.x,0.0,event.relative.y) if Input.is_key_pressed(KEY_SHIFT) else Vector3(event.relative.x,event.relative.y,0.0))
+			global_position += global_transform.basis*debug_mouse_sensitivity*(Vector3(event.relative.x,0.0,event.relative.y))
