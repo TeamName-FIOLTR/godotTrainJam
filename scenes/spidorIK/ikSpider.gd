@@ -20,11 +20,15 @@ var originial_transform : Transform3D
 @export_range(0,1) var leg_offset : float 
 
 @export var debug_mouse_sensitivity : float = 1.0
+@export var movement_speed : float = 4
+@export var rotation_speed : float = 1
 
 var average_normal : Vector3 = Vector3.UP
 
 var prev_position : Vector3
 
+var input_movement : Vector2
+var input_rotation : float
 
 func align_to_average_norm()->void:
 	#global_transform = originial_transform.looking_at(global_position + average_normal)
@@ -133,9 +137,12 @@ var velocity : Vector3
 func _physics_process(delta):
 	velocity = prev_position - global_position
 	prev_position = global_position 
+func _process(delta):
+	global_position += global_transform.basis*(Vector3(input_movement.x,0.0,input_movement.y)*delta*movement_speed)
+	global_transform.basis = global_transform.basis.rotated(global_transform.basis.y,input_rotation*delta*rotation_speed)
+
 func _input(event):
-	if event is InputEventMouseMotion:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			global_position += global_transform.basis*debug_mouse_sensitivity*(Vector3(event.relative.x,event.relative.y, 0.0))
-		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-			global_position += global_transform.basis*debug_mouse_sensitivity*(Vector3(event.relative.x,0.0,event.relative.y))
+	
+	var input_vec = Input.get_vector("leftwards","rightwards","forwards","backwards")
+	input_movement = input_vec
+	input_rotation = Input.get_axis("turn_rightwards","turn_leftwards")
