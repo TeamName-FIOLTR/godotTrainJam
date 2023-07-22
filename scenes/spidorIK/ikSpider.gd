@@ -5,7 +5,7 @@ class_name Spidor
 
 var originial_transform : Transform3D
 
-@export var skele  : Skeleton3D # 💀
+@export var skele  : Skeleton3D # 💀 spooky scary
 @export var targets : Node3D 
 @export var raycasts : Node3D
 @export var ik : PackedScene
@@ -22,6 +22,9 @@ var originial_transform : Transform3D
 @export var debug_mouse_sensitivity : float = 1.0
 
 var average_normal : Vector3 = Vector3.UP
+
+var prev_position : Vector3
+
 func align_to_average_norm()->void:
 	#global_transform = originial_transform.looking_at(global_position + average_normal)
 	var llp = left_leg_positions
@@ -97,7 +100,10 @@ func _ready():
 		
 		#right
 		add_ik(i,"R")
-
+var velocity : Vector3
+func _physics_process(delta):
+	velocity = prev_position - global_position
+	prev_position = global_position 
 func _input(event):
 	if event is InputEventMouseMotion:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
