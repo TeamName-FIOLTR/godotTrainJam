@@ -117,5 +117,45 @@ size = Vector3(70.8192, 91.9125, 81.2176)
 transform = Transform3D(1, 2.32831e-09, 3.72529e-09, 2.79397e-09, 1, 0, 3.72529e-09, -1.49012e-08, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_rvn7s")
 
+[node name="CSGBox3D16" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.0566576, 0.987658, -0.14602, -0.997664, -0.0615989, -0.0295402, -0.0381701, 0.144005, 0.988841, 218.068, 47.8982, -121.299)
+size = Vector3(70.8192, 91.9125, 81.2176)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D16"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D16/StaticBody3D"]
+transform = Transform3D(1, 2.32831e-09, 3.72529e-09, 2.79397e-09, 1, 0, 3.72529e-09, -1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_rvn7s")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.0566576, 0.987658, -0.14602, -0.997664, -0.0615989, -0.0295402, -0.0381701, 0.144005, 0.988841, 299.827, 76.536, -121.299)
+size = Vector3(70.8192, 91.9125, 81.2176)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D17"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D17/StaticBody3D"]
+transform = Transform3D(1, 2.32831e-09, 3.72529e-09, 2.79397e-09, 1, 0, 3.72529e-09, -1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_rvn7s")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.0566576, 0.987658, -0.14602, -0.997664, -0.0615989, -0.0295402, -0.0381701, 0.144005, 0.988841, 223.935, 103.13, -205.118)
+size = Vector3(70.8192, 91.9125, 81.2176)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D18"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D18/StaticBody3D"]
+transform = Transform3D(1, 2.32831e-09, 3.72529e-09, 2.79397e-09, 1, 0, 3.72529e-09, -1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_rvn7s")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.0566576, 0.987658, -0.14602, -0.997664, -0.0615989, -0.0295402, -0.0381701, 0.144005, 0.988841, 349.56, 103.13, -182.821)
+size = Vector3(70.8192, 91.9125, 81.2176)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D19"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D19/StaticBody3D"]
+transform = Transform3D(1, 2.32831e-09, 3.72529e-09, 2.79397e-09, 1, 0, 3.72529e-09, -1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_rvn7s")
+
 [editable path="wavything"]
 [editable path="wavything2"]

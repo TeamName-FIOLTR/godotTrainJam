@@ -170,6 +170,9 @@ func _ready():
 		
 		#right
 		add_ik(i,"R")
+func sigmoid(x : float)->float:
+	var ex = exp(x)
+	return ex / (ex + 1)
 func _physics_process(delta):
 	var dist = get_average_distance_to_plane()
 	global_transform.origin += global_transform.basis * Vector3.UP * (target_plane_distance - dist) * delta * 5
@@ -184,7 +187,9 @@ func _process(delta):
 	prev_rotation_distance = rotation_distance
 	rotation_distance += input_rotation * delta 
 	target_basis = target_basis.rotated(target_basis.y,input_rotation*delta*rotation_speed)
-
+	var local_velocity = (global_transform.affine_inverse().basis.inverse()*velocity).normalized()
+	raycasts.rotation.z = -(sigmoid(local_velocity.x) - 0.5)/1.3
+	raycasts.rotation.x = (sigmoid(local_velocity.z) - 0.5)/1.3
 func _input(event):
 	var input_vec = Input.get_vector("leftwards","rightwards","forwards","backwards")
 	input_movement = input_vec

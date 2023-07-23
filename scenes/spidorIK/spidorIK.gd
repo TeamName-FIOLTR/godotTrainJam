@@ -76,7 +76,15 @@ func _physics_process(delta):
 		moving_leg_count -= 1
 	if can_move:
 		print(spidor.rotation_speed)
-		leg_step_time += delta*step_speed*( clamp(spidor.velocity.length(),0,300) + clamp(abs(8*spidor.angular_velocity),0,0.5))
+		var speed = spidor.velocity.length()
+		var speed_bonus = (clamp(remap( ( spidor.global_position - ik_target.global_position - spidor.velocity).length_squared(),100,800,0,1.5)-.5,0,1))
+
+		speed_bonus = 0
+		print(speed_bonus)
+		leg_step_time += delta*step_speed*( 
+			clamp(speed,0,300) +
+			clamp(abs(8*spidor.angular_velocity),0,0.5)
+		)*(1+speed_bonus)
 		leg_step_time = clamp(leg_step_time,0,1)
 		ik_target.global_position = lerp(old_target_position,new_target_position,leg_step_time)
 		interpolation = remap(cos(2*PI*leg_step_time),-1,1,.7,1)
