@@ -24,6 +24,7 @@ var originial_transform : Transform3D
 @export var rotation_speed : float = 1
 
 @export var basis_lerp_speed : float = 10
+@export var target_plane_distance : float = 1.2
 
 var average_normal : Vector3 = Vector3.UP
 
@@ -79,6 +80,24 @@ func align_to_average_norm()->void:
 	#global_transform.basis.z = k
 	
 	pass
+
+#returns the average distance to planes created from the leg points
+func get_average_distance_to_plane()->float:
+	var llp = left_leg_positions
+	var rlp = right_leg_positions 
+	
+	var average_distance : float = 0
+	
+	average_distance += Plane(llp[0],rlp[0],llp[3]).distance_to(global_position)
+	average_distance += Plane(llp[0],rlp[1],llp[3]).distance_to(global_position)
+	average_distance += Plane(llp[0],rlp[2],llp[3]).distance_to(global_position)
+	average_distance += Plane(llp[0],rlp[3],llp[3]).distance_to(global_position)
+	average_distance += Plane(rlp[3],llp[0],rlp[0]).distance_to(global_position)
+	average_distance += Plane(rlp[3],llp[1],rlp[0]).distance_to(global_position)
+	average_distance += Plane(rlp[3],llp[2],rlp[0]).distance_to(global_position)
+	average_distance += Plane(rlp[3],llp[3],rlp[0]).distance_to(global_position)
+
+	return average_distance / 8
 
 func get_normal_of_points(first : Vector3, second : Vector3, third : Vector3):
 	return (first-second).cross(third-second).normalized()
@@ -148,9 +167,13 @@ func _ready():
 		add_ik(i,"R")
 var velocity : Vector3
 func _physics_process(delta):
+	var dist = get_average_distance_to_plane()
+	print(dist)	
+	global_transform.origin += global_transform.basis * Vector3.UP * (target_plane_distance - dist) * delta * 5
+
 	global_transform.basis = lerp(global_transform.basis,target_basis,delta*basis_lerp_speed)
 	velocity = prev_position - global_position
-	prev_position = global_position 
+	prev_position = global_position
 func _process(delta):
 	global_position += global_transform.basis*(Vector3(input_movement.x,0.0,input_movement.y)*delta*movement_speed)
 	target_basis = target_basis.rotated(target_basis.y,input_rotation*delta*rotation_speed)

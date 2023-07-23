@@ -46,9 +46,7 @@ func update_position_given_ray(ray)->bool:
 	return false 
 
 func update_position()->void:
-	if not update_position_given_ray(raycast):
-		print("using ledge raycast")
-		if update_position_given_ray(ledge_raycast): print("leg hit!")
+	if not update_position_given_ray(raycast): update_position_given_ray(ledge_raycast)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
