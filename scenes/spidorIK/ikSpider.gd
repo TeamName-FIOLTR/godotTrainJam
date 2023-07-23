@@ -24,16 +24,21 @@ var originial_transform : Transform3D
 @export var rotation_speed : float = 1
 
 @export var basis_lerp_speed : float = 10
-@export var target_plane_distance : float = 1.2
+@export var target_plane_distance : float = 0.5
 
 var average_normal : Vector3 = Vector3.UP
 
+var velocity : Vector3
 var prev_position : Vector3
 
 var input_movement : Vector2
 var input_rotation : float
 
 var target_basis : Basis
+var rotation_distance : float = 0.0
+var prev_rotation_distance : float = 0.0
+var rotation_check_threshold : float = .3
+var angular_velocity : float = 0
 
 func align_to_average_norm()->void:
 	#global_transform = originial_transform.looking_at(global_position + average_normal)
@@ -165,21 +170,22 @@ func _ready():
 		
 		#right
 		add_ik(i,"R")
-var velocity : Vector3
 func _physics_process(delta):
 	var dist = get_average_distance_to_plane()
-	print(dist)	
 	global_transform.origin += global_transform.basis * Vector3.UP * (target_plane_distance - dist) * delta * 5
-
 	global_transform.basis = lerp(global_transform.basis,target_basis,delta*basis_lerp_speed)
 	velocity = prev_position - global_position
-	prev_position = global_position
+	angular_velocity = rotation_distance - prev_rotation_distance
+	prev_position = global_position 
+	if rotation_distance > rotation_check_threshold*1.2:
+		rotation_distance = 0
 func _process(delta):
 	global_position += global_transform.basis*(Vector3(input_movement.x,0.0,input_movement.y)*delta*movement_speed)
+	prev_rotation_distance = rotation_distance
+	rotation_distance += input_rotation * delta 
 	target_basis = target_basis.rotated(target_basis.y,input_rotation*delta*rotation_speed)
 
 func _input(event):
-	
 	var input_vec = Input.get_vector("leftwards","rightwards","forwards","backwards")
 	input_movement = input_vec
 	input_rotation = Input.get_axis("turn_rightwards","turn_leftwards")

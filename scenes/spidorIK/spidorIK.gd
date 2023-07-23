@@ -13,8 +13,8 @@ var ledge_raycast : RayCast3D  #used in raycasting ik if above fails
 var step_speed : float = 5
 
 
-var min_threshold : float  = 90
-var max_threshold : float  = 100
+var min_threshold : float  = 10
+var max_threshold : float  = 0.2
 var leg_index : int = 0
 var left_leg : bool = false
 
@@ -63,7 +63,7 @@ func sigmoid(x : float)->float:
 	return v/(v+1)
 func _physics_process(delta):
 	var d = spidor.global_position.distance_to(old_spidor_position)
-	if  d > max_threshold or d < min_threshold:
+	if  d > max_threshold  or abs(spidor.rotation_distance) > spidor.rotation_check_threshold:
 		self.update_position()
 	if ik_target.global_position.distance_squared_to(new_target_position) > 25:
 		#we want to move
@@ -75,7 +75,8 @@ func _physics_process(delta):
 		can_move = false 
 		moving_leg_count -= 1
 	if can_move:
-		leg_step_time += delta*step_speed*clamp(spidor.velocity.length(),0,300)
+		print(spidor.rotation_speed)
+		leg_step_time += delta*step_speed*( clamp(spidor.velocity.length(),0,300) + clamp(abs(8*spidor.angular_velocity),0,0.5))
 		leg_step_time = clamp(leg_step_time,0,1)
 		ik_target.global_position = lerp(old_target_position,new_target_position,leg_step_time)
 		interpolation = remap(cos(2*PI*leg_step_time),-1,1,.7,1)
