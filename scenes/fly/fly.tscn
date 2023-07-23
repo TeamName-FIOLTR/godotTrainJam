@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmyk6iofhsoen"]
+
+[ext_resource type="PackedScene" uid="uid://ch5g22cks6pp8" path="res://assets/models/fly.glb" id="1_04lwp"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="fly" parent="." instance=ExtResource("1_04lwp")]
+
+[node name="Skeleton3D" parent="fly/Armature" index="0"]
+bones/0/position = Vector3(-0.17098, 0.227864, 6.18323e-09)
+bones/0/rotation = Quaternion(-0.375279, 0.592635, 0.341617, 0.625498)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/position = Vector3(0.17098, 0.227864, 6.18323e-09)
+bones/1/rotation = Quaternion(-0.374513, -0.591818, -0.342446, 0.626276)
+bones/1/scale = Vector3(1, 1, 1)
+
+[editable path="fly"]
