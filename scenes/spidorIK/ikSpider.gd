@@ -23,12 +23,16 @@ var originial_transform : Transform3D
 @export var movement_speed : float = 4
 @export var rotation_speed : float = 1
 
+@export var basis_lerp_speed : float = 10
+
 var average_normal : Vector3 = Vector3.UP
 
 var prev_position : Vector3
 
 var input_movement : Vector2
 var input_rotation : float
+
+var target_basis : Basis
 
 func align_to_average_norm()->void:
 	#global_transform = originial_transform.looking_at(global_position + average_normal)
@@ -61,14 +65,14 @@ func align_to_average_norm()->void:
 
 	var b = Basis(nx,cooler_norm,nz)
 	
-	print('---')
-	print(nx)
-	print(cooler_norm)
-	print(nz)
-	print('---')
+	#print('---')
+	#print(nx)
+	#print(cooler_norm)
+	#print(nz)
+	#print('---')
 
 
-	global_transform.basis = b#.orthonormalized()
+	target_basis = b#.orthonormalized()
 	
 	#global_transform.basis.y = cooler_norm 
 	#global_transform.basis.x = j
@@ -95,12 +99,13 @@ func add_ik(i,lr):
 	target.add_child(sphear)
 
 	var raycast = RayCast3D.new()
+	var ledge_raycast = RayCast3D.new()
 
 	target.name = "Leg " + str(i) + " target"
 	targets.add_child(target)
 	ik_local.target_node = target.get_path()
+	ik_local.ik_target = target 
 
-	ik_local.ik_target = target
 	var angle = float(i)/leg_count 
 	angle = remap(angle,0,1,PI/4,2*PI)
 	var offset = leg_offset*PI
@@ -110,13 +115,21 @@ func add_ik(i,lr):
 
 
 	raycasts.add_child(raycast)
+	raycasts.add_child(ledge_raycast)
 
 	raycast.transform.origin.y += 10
 	raycast.target_position = (target.global_transform.origin - raycast.global_transform.origin)*2
+	
+	ledge_raycast.global_position = raycast.global_position + raycast.target_position
+
+	#point to the spidor
+	ledge_raycast.target_position = (self.global_transform.origin - ledge_raycast.global_transform.origin)
+	ledge_raycast.target_position.y -= 10
 	#raycast.target_position = Vector3(0,-100,0)
 	#raycast.look_at(target.transform.origin)
 	
 	ik_local.raycast = raycast 
+	ik_local.ledge_raycast = ledge_raycast
 
 	skele.add_child(ik_local)
 
@@ -135,11 +148,12 @@ func _ready():
 		add_ik(i,"R")
 var velocity : Vector3
 func _physics_process(delta):
+	global_transform.basis = lerp(global_transform.basis,target_basis,delta*basis_lerp_speed)
 	velocity = prev_position - global_position
 	prev_position = global_position 
 func _process(delta):
 	global_position += global_transform.basis*(Vector3(input_movement.x,0.0,input_movement.y)*delta*movement_speed)
-	global_transform.basis = global_transform.basis.rotated(global_transform.basis.y,input_rotation*delta*rotation_speed)
+	target_basis = target_basis.rotated(target_basis.y,input_rotation*delta*rotation_speed)
 
 func _input(event):
 	

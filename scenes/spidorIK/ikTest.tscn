@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3p3fr6cu55p3"]
+[gd_scene load_steps=12 format=3 uid="uid://b3p3fr6cu55p3"]
 
 [ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
 [ext_resource type="Script" path="res://scenes/spidorIK/ikSpider.gd" id="1_c15jh"]
 [ext_resource type="PackedScene" uid="uid://bepaluowuy0co" path="res://scenes/spidorIK/spider_leg_selection.tscn" id="2_2uwge"]
-[ext_resource type="PackedScene" uid="uid://dfassnfjoe5jb" path="res://@RayCast3D@2.tscn" id="5_wa8pq"]
 [ext_resource type="Shader" uid="uid://c1affo78f5dak" path="res://scenes/spidorIK/ughwhenmakeuniquerecursivedoesnotmakeuniquerecursivethankyougodotgameengineverycoolanduseful.tres" id="6_2unrk"]
 [ext_resource type="Shader" uid="uid://cgk0mrlo428i5" path="res://scenes/spidorIK/planetestmaterial.tres" id="6_idl1e"]
 
@@ -61,8 +60,6 @@ surface_material_override/1 = SubResource("StandardMaterial3D_0tj7x")
 top_level = true
 
 [node name="raycasts" type="Node3D" parent="."]
-
-[node name="raycasts2" parent="." instance=ExtResource("5_wa8pq")]
 
 [node name="TestPlane" type="Marker3D" parent="."]
 

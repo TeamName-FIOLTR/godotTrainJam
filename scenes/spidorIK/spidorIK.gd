@@ -7,7 +7,9 @@ const MAX_LEG_MOVIES : int = 3
 var can_move : bool = false 
 
 var spidor : Spidor
-var raycast : RayCast3D 
+var raycast : RayCast3D  #used in raycasting ik
+var ledge_raycast : RayCast3D  #used in raycasting ik if above fails
+
 var step_speed : float = 5
 
 
@@ -32,13 +34,21 @@ func norm(x):
 func update_leg_array(pos : Vector3)->void:
 	if left_leg: spidor.left_leg_positions[leg_index] = pos
 	else: spidor.right_leg_positions[leg_index] = pos
-func update_position()->void:
-	if raycast.is_colliding():
-		new_target_position = raycast.get_collision_point()
+
+func update_position_given_ray(ray)->bool:
+	if ray.is_colliding():
+		new_target_position = ray.get_collision_point()
 		old_target_position = ik_target.global_position
 		old_spidor_position = spidor.global_position
-		update_leg_array(raycast.get_collision_point())
+		update_leg_array(ray.get_collision_point())
 		spidor.align_to_average_norm()
+		return true 
+	return false 
+
+func update_position()->void:
+	if not update_position_given_ray(raycast):
+		print("using ledge raycast")
+		if update_position_given_ray(ledge_raycast): print("leg hit!")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
