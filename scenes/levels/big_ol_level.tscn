@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b63d8cw1l0sr5"]
+[gd_scene load_steps=9 format=3 uid="uid://b63d8cw1l0sr5"]
 
 [ext_resource type="PackedScene" uid="uid://deu0i2b5y80e2" path="res://scenes/train/bigoltrainlevel.tscn" id="1_85brr"]
 [ext_resource type="PackedScene" uid="uid://b3p3fr6cu55p3" path="res://scenes/spidorIK/ikTest.tscn" id="2_3lp4n"]
-[ext_resource type="PackedScene" uid="uid://dnjm5s6grex5q" path="res://assets/models/coke_bottle.glb" id="3_oixme"]
+[ext_resource type="PackedScene" uid="uid://cqmllgdunnfoy" path="res://scenes/coke_bottle/cup.tscn" id="3_qkjiv"]
+[ext_resource type="PackedScene" uid="uid://bbk6kyt73dl3g" path="res://scenes/coke_bottle/coke_bottle.tscn" id="4_ot6xm"]
+[ext_resource type="PackedScene" uid="uid://bjwxdme756u4d" path="res://scenes/coke_bottle/dry_erase_marker.tscn" id="5_eiv0h"]
+[ext_resource type="PackedScene" uid="uid://clwfvjkjhwf1y" path="res://scenes/coke_bottle/s_poon.tscn" id="6_pbswu"]
+[ext_resource type="PackedScene" uid="uid://1neqnisnhg07" path="res://scenes/coke_bottle/universal_serial_b_us_type_a_version_2_0_480_mbps_with_a_loop.tscn" id="7_7vk1s"]
+[ext_resource type="PackedScene" uid="uid://dmyk6iofhsoen" path="res://scenes/fly/fly.tscn" id="8_y07sr"]
 
 [node name="Big Ol Level" type="Node3D"]
 
@@ -11,5 +16,269 @@
 [node name="Spidor" parent="." instance=ExtResource("2_3lp4n")]
 transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, -579.116, 1017.88, 631.201)
 
-[node name="coke_bottle" parent="." instance=ExtResource("3_oixme")]
-transform = Transform3D(-0.14767, 0.962862, -0.226034, -0.526623, -0.269996, -0.806084, -0.837175, 0, 0.546935, -733.375, 1068.9, 377.002)
+[node name="cup" parent="." instance=ExtResource("3_qkjiv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -803, 1018, 537)
+
+[node name="cokeBottle" parent="." instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -739, 1018, 597)
+
+[node name="cup2" parent="." instance=ExtResource("3_qkjiv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -704, 1018, 666)
+
+[node name="dry erase marker" parent="." instance=ExtResource("5_eiv0h")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -447, 1029.41, 459)
+
+[node name="SPoon" parent="." instance=ExtResource("6_pbswu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -455, 1025.12, 687)
+
+[node name="cokeBottle2" parent="." instance=ExtResource("4_ot6xm")]
+transform = Transform3D(-0.14767, 0.226033, 0.962862, -0.526623, 0.806084, -0.269996, -0.837175, -0.546935, -2.39073e-08, -748.471, 1015.06, 413.529)
+
+[node name="Universal Serial BUs Type A Version 2_0 480 Mbps WITH A LOOP" parent="." instance=ExtResource("7_7vk1s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -680.254, 1252.36, 195.797)
+
+[node name="Fly" parent="." instance=ExtResource("8_y07sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -578.554, 1024.56, 610.178)
+
+[node name="Coke BOttles" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -947.133, 1049.22, 1742.17)
+
+[node name="cokeBottle3" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 366.389, -31.3445, 703.259)
+
+[node name="cokeBottle4" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 303.513, -31.3445, 555.267)
+
+[node name="cokeBottle5" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 420.195, -31.3445, 483.932)
+
+[node name="cokeBottle6" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 387.283, -31.3445, 555.514)
+
+[node name="cokeBottle7" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.6891, -31.3445, 605.802)
+
+[node name="cokeBottle8" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.7601, -31.3445, 403.336)
+
+[node name="cokeBottle9" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 510.041, -31.3445, 206.56)
+
+[node name="cokeBottle10" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199.822, -31.3445, 330.852)
+
+[node name="cokeBottle11" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1583, -31.3445, 241.887)
+
+[node name="cokeBottle12" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.4649, -31.3445, 500.791)
+
+[node name="cokeBottle13" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388.286, -31.3445, 639.021)
+
+[node name="cokeBottle14" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 325.411, -31.3445, 491.029)
+
+[node name="cokeBottle15" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 442.093, -31.3445, 419.695)
+
+[node name="cokeBottle16" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 409.181, -31.3445, 491.277)
+
+[node name="cokeBottle17" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.7916, -31.3445, 541.565)
+
+[node name="cokeBottle18" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.6577, -31.3445, 339.098)
+
+[node name="cokeBottle19" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 531.938, -31.3445, 142.323)
+
+[node name="cokeBottle20" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 221.719, -31.3445, 266.615)
+
+[node name="cokeBottle21" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.73932, -31.3445, 177.65)
+
+[node name="cokeBottle22" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.362, -31.3445, 436.554)
+
+[node name="cokeBottle23" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 230.646, -31.3445, 599.369)
+
+[node name="cokeBottle24" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 167.771, -31.3445, 451.377)
+
+[node name="cokeBottle25" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 284.453, -31.3445, 380.042)
+
+[node name="cokeBottle26" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251.541, -31.3445, 451.624)
+
+[node name="cokeBottle27" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -229.432, -31.3445, 501.912)
+
+[node name="cokeBottle28" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.9824, -31.3445, 299.445)
+
+[node name="cokeBottle29" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 374.298, -31.3445, 102.67)
+
+[node name="cokeBottle30" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.0792, -31.3445, 226.962)
+
+[node name="cokeBottle31" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.901, -31.3445, 137.997)
+
+[node name="cokeBottle32" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.2776, -31.3445, 396.901)
+
+[node name="cokeBottle33" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 335.078, -31.3445, 489.035)
+
+[node name="cokeBottle34" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 272.203, -31.3445, 341.043)
+
+[node name="cokeBottle35" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388.885, -31.3445, 269.708)
+
+[node name="cokeBottle36" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 355.973, -31.3445, 341.29)
+
+[node name="cokeBottle37" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -124.999, -31.3445, 391.578)
+
+[node name="cokeBottle38" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4499, -31.3445, 189.112)
+
+[node name="cokeBottle39" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 478.73, -31.3445, -7.6637)
+
+[node name="cokeBottle40" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 168.511, -31.3445, 116.628)
+
+[node name="cokeBottle41" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.4684, -31.3445, 27.6635)
+
+[node name="cokeBottle42" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.1547, -31.3445, 286.567)
+
+[node name="cokeBottle43" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 81.9671, -31.3445, 489.212)
+
+[node name="cokeBottle44" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 86.1132, -31.3445, 328.471)
+
+[node name="cokeBottle45" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 221.87, -31.3445, 311.937)
+
+[node name="cokeBottle46" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 162.24, -31.3445, 363.43)
+
+[node name="cokeBottle47" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -296.291, -31.3445, 209.765)
+
+[node name="cokeBottle48" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -74.5247, -31.3445, 88.3184)
+
+[node name="cokeBottle49" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 418.635, -31.3445, 96.7837)
+
+[node name="cokeBottle50" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 84.8036, -31.3445, 81.2621)
+
+[node name="cokeBottle51" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -72.1185, -31.3445, -88.0028)
+
+[node name="cokeBottle52" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -88.8115, -31.3445, 188.904)
+
+[node name="cokeBottle53" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -52.0474, -31.3445, 615.977)
+
+[node name="cokeBottle54" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -47.9013, -31.3445, 455.236)
+
+[node name="cokeBottle55" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 87.8553, -31.3445, 438.702)
+
+[node name="cokeBottle56" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 28.2256, -31.3445, 490.194)
+
+[node name="cokeBottle57" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -430.305, -31.3445, 336.53)
+
+[node name="cokeBottle58" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -208.539, -31.3445, 215.083)
+
+[node name="cokeBottle59" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 284.621, -31.3445, 223.549)
+
+[node name="cokeBottle60" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -49.2108, -31.3445, 208.027)
+
+[node name="cokeBottle61" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -206.133, -31.3445, 38.7621)
+
+[node name="cokeBottle62" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -222.826, -31.3445, 315.669)
+
+[node name="cokeBottle63" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -18.7619, -31.3445, 740.804)
+
+[node name="cokeBottle64" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -14.6158, -31.3445, 580.063)
+
+[node name="cokeBottle65" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 121.141, -31.3445, 563.529)
+
+[node name="cokeBottle66" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 61.511, -31.3445, 615.022)
+
+[node name="cokeBottle67" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -397.02, -31.3445, 461.357)
+
+[node name="cokeBottle68" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -175.254, -31.3445, 339.911)
+
+[node name="cokeBottle69" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, 317.906, -31.3445, 348.376)
+
+[node name="cokeBottle70" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -15.9254, -31.3445, 332.854)
+
+[node name="cokeBottle71" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -172.847, -31.3445, 163.589)
+
+[node name="cokeBottle72" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.90999, 0, -0.41463, 0, 1, 0, 0.41463, 0, 0.90999, -189.541, -31.3445, 440.496)
+
+[node name="cokeBottle73" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 577.216, -31.3445, 352.754)
+
+[node name="cokeBottle74" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 421.502, -31.3445, 392.854)
+
+[node name="cokeBottle75" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 368.366, -31.3445, 266.839)
+
+[node name="cokeBottle76" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 434.24, -31.3445, 310.058)
+
+[node name="cokeBottle77" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 412.233, -31.3445, 793.151)
+
+[node name="cokeBottle78" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 234.619, -31.3445, 613.2)
+
+[node name="cokeBottle79" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 107.496, -31.3445, 136.631)
+
+[node name="cokeBottle80" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 184.132, -31.3445, 461.918)
+
+[node name="cokeBottle81" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 64.399, -31.3445, 659.247)
+
+[node name="cokeBottle82" parent="Coke BOttles" instance=ExtResource("4_ot6xm")]
+transform = Transform3D(0.149138, 0, 0.988816, 0, 1, 0, -0.988816, 0, 0.149138, 335.265, -31.3445, 599.351)

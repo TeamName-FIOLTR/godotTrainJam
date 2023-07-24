@@ -2,9 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://ch5g22cks6pp8" path="res://assets/models/fly.glb" id="1_04lwp"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Fly" type="Node3D"]
 
 [node name="fly" parent="." instance=ExtResource("1_04lwp")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="Skeleton3D" parent="fly/Armature" index="0"]
 bones/0/position = Vector3(-0.17098, 0.227864, 6.18323e-09)

@@ -136,18 +136,21 @@ mesh = SubResource("PlaneMesh_stuur")
 
 [node name="CSGTorus3D" type="CSGTorus3D" parent="SpidorRotation/RaycastMount/raycasts"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.24593, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_00plw")
 inner_radius = 6.80323
 outer_radius = 7.49025
 
 [node name="CSGTorus3D2" type="CSGTorus3D" parent="SpidorRotation/RaycastMount/raycasts"]
 transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, 2.03156, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_e1nnx")
 inner_radius = 13.0583
 outer_radius = 13.8333
 
 [node name="CSGTorus3D3" type="CSGTorus3D" parent="SpidorRotation/RaycastMount/raycasts"]
 transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, -4.28315, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_qaq5v")
 inner_radius = 23.2733
 outer_radius = 23.852
