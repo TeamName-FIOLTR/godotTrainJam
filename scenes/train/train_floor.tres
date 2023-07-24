@@ -1,0 +1,46 @@
+[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://b3vyg83g32p2w"]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_xacy3"]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_vmfks"]
+constant = 0.5
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_rrlp2"]
+constant = 1.0
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+
+void fragment() {
+// FloatConstant:3
+	float n_out3p0 = 0.500000;
+
+
+// FloatConstant:2
+	float n_out2p0 = 0.000000;
+
+
+// FloatConstant:4
+	float n_out4p0 = 1.000000;
+
+
+// Output:0
+	METALLIC = n_out3p0;
+	ROUGHNESS = n_out2p0;
+	SPECULAR = n_out4p0;
+
+
+}
+"
+graph_offset = Vector2(281.82, 149.658)
+nodes/fragment/2/node = SubResource("VisualShaderNodeFloatConstant_xacy3")
+nodes/fragment/2/position = Vector2(240, 220)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatConstant_vmfks")
+nodes/fragment/3/position = Vector2(220, 160)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatConstant_rrlp2")
+nodes/fragment/4/position = Vector2(247.5, 227.5)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 3, 3, 0, 0, 2, 4, 0, 0, 4)

@@ -84,8 +84,6 @@ shape = SubResource("ConcavePolygonShape3D_up4bj")
 [node name="Spidor" parent="." instance=ExtResource("2_4gpau")]
 transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 194.625, 0.776478, 0)
 debug_mouse_sensitivity = 0.2
-movement_speed = 45.0
-rotation_speed = 5.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29538, 3.05176e-05, -1.19379)

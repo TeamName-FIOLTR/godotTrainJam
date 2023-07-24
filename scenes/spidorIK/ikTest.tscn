@@ -41,6 +41,8 @@ raycasts = NodePath("raycasts")
 ik = ExtResource("2_2uwge")
 leg_count = 8
 leg_offset = 0.4
+movement_speed = 45.0
+rotation_speed = 5.0
 
 [node name="cam" type="Marker3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -48,6 +50,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="Camera3D" type="Camera3D" parent="cam"]
 transform = Transform3D(-0.97989, 0.155897, -0.0130693, 0.136131, 0.890527, 0.416039, 0.0770915, 0.409043, -0.900777, 0, 15.9609, -31.5657)
 current = true
+near = 1.0
+far = 20000.0
 
 [node name="mainspiderthingig" parent="." instance=ExtResource("1_buafi")]
 transform = Transform3D(1.11924, 0, 0, 0, 1.11924, 0, 0, 0, 1.11924, 0, -9.46331e-07, 1.89266e-06)
@@ -55,6 +59,13 @@ transform = Transform3D(1.11924, 0, 0, 0, 1.11924, 0, 0, 0, 1.11924, 0, -9.46331
 [node name="8legts" parent="mainspiderthingig/Exoskeleton Rig/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_jktnt")
 surface_material_override/1 = SubResource("StandardMaterial3D_0tj7x")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="mainspiderthingig"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.96693, -5.47898)
+light_color = Color(1, 0.662745, 0.305882, 1)
+light_energy = 99.0
+spot_range = 69.1276
+spot_angle = 40.8798
 
 [node name="targets" type="Node3D" parent="."]
 top_level = true

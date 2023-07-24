@@ -1,0 +1,51 @@
+[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://bir1hkildm1ms"]
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_qj7a4"]
+constant = Color(0.298039, 1, 1, 1)
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_kf6u4"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1), 2, 7.905]
+op_type = 4
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_fx8ci"]
+parameter_name = "LightBrightness"
+qualifier = 1
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+global uniform float LightBrightness;
+
+
+
+void fragment() {
+// ColorConstant:2
+	vec4 n_out2p0 = vec4(0.298039, 1.000000, 1.000000, 1.000000);
+
+
+// FloatParameter:4
+	float n_out4p0 = LightBrightness;
+
+
+// Mix:3
+	vec3 n_in3p0 = vec3(0.00000, 0.00000, 0.00000);
+	vec3 n_out3p0 = mix(n_in3p0, vec3(n_out2p0.xyz), n_out4p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	EMISSION = n_out3p0;
+
+
+}
+"
+graph_offset = Vector2(238.941, 182.353)
+nodes/fragment/0/position = Vector2(520, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorConstant_qj7a4")
+nodes/fragment/2/position = Vector2(240, 160)
+nodes/fragment/3/node = SubResource("VisualShaderNodeMix_kf6u4")
+nodes/fragment/3/position = Vector2(353.526, 250.891)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatParameter_fx8ci")
+nodes/fragment/4/position = Vector2(140, 280)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 2, 0, 3, 1, 3, 0, 0, 5, 4, 0, 3, 2)

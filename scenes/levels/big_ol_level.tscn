@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b63d8cw1l0sr5"]
+
+[ext_resource type="PackedScene" uid="uid://deu0i2b5y80e2" path="res://scenes/train/bigoltrainlevel.tscn" id="1_85brr"]
+[ext_resource type="PackedScene" uid="uid://b3p3fr6cu55p3" path="res://scenes/spidorIK/ikTest.tscn" id="2_3lp4n"]
+
+[node name="Big Ol Level" type="Node3D"]
+
+[node name="bigoltrainlevel" parent="." instance=ExtResource("1_85brr")]
+
+[node name="Spidor" parent="." instance=ExtResource("2_3lp4n")]
+transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, -579.116, 1017.88, 631.201)

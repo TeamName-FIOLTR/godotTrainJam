@@ -188,8 +188,8 @@ func _process(delta):
 	rotation_distance += input_rotation * delta 
 	target_basis = target_basis.rotated(target_basis.y,input_rotation*delta*rotation_speed)
 	var local_velocity = (global_transform.affine_inverse().basis.inverse()*velocity).normalized()
-	raycasts.rotation.z = -(sigmoid(local_velocity.x) - 0.5)/1.3
-	raycasts.rotation.x = (sigmoid(local_velocity.z) - 0.5)/1.3
+	raycasts.rotation.z = -(sigmoid(local_velocity.x) - 0.5)*2
+	raycasts.rotation.x = -(sigmoid(-local_velocity.z) - 0.5)*2
 func _input(event):
 	var input_vec = Input.get_vector("leftwards","rightwards","forwards","backwards")
 	input_movement = input_vec
