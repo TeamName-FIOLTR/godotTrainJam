@@ -19,18 +19,22 @@ default_input_values = [0, Vector2(0, 0), 1, Vector2(30, 30)]
 op_type = 0
 operator = 2
 
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_hyejk"]
+parameter_name = "Front_Face_Color"
+default_value_enabled = true
+default_value = Color(0, 0, 1, 1)
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_uifco"]
+parameter_name = "Back_Face_Color"
+default_value_enabled = true
+default_value = Color(1, 0, 0, 1)
+
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_8vrps"]
 input_name = "front_facing"
 
 [sub_resource type="VisualShaderNodeSwitch" id="VisualShaderNodeSwitch_hnwcb"]
 default_input_values = [0, false, 1, Vector3(1, 1, 1), 2, Vector3(0, 0, 0)]
 op_type = 4
-
-[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_gmm1b"]
-constant = Color(0, 0, 1, 1)
-
-[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_07mk4"]
-constant = Color(1, 0, 0, 1)
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_fgneo"]
 constant = 0.5
@@ -46,6 +50,8 @@ input_name = "screen_uv"
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
+uniform vec4 Front_Face_Color : source_color = vec4(0.000000, 0.000000, 1.000000, 1.000000);
+uniform vec4 Back_Face_Color : source_color = vec4(1.000000, 0.000000, 0.000000, 1.000000);
 
 
 
@@ -54,17 +60,17 @@ void fragment() {
 	bool n_out2p0 = FRONT_FACING;
 
 
-// ColorConstant:4
-	vec4 n_out4p0 = vec4(0.000000, 0.000000, 1.000000, 1.000000);
+// ColorParameter:16
+	vec4 n_out16p0 = Front_Face_Color;
 
 
-// ColorConstant:5
-	vec4 n_out5p0 = vec4(1.000000, 0.000000, 0.000000, 1.000000);
+// ColorParameter:17
+	vec4 n_out17p0 = Back_Face_Color;
 
 
 	vec3 n_out3p0;
 // Switch:3
-	n_out3p0 = mix(vec3(n_out5p0.xyz), vec3(n_out4p0.xyz), float(n_out2p0));
+	n_out3p0 = mix(vec3(n_out17p0.xyz), vec3(n_out16p0.xyz), float(n_out2p0));
 
 
 // FloatConstant:6
@@ -78,15 +84,11 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-599.822, 55.6142)
+graph_offset = Vector2(-1351.34, 306.627)
 nodes/fragment/2/node = SubResource("VisualShaderNodeInput_8vrps")
 nodes/fragment/2/position = Vector2(-1340, 260)
 nodes/fragment/3/node = SubResource("VisualShaderNodeSwitch_hnwcb")
 nodes/fragment/3/position = Vector2(-900, 340)
-nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_gmm1b")
-nodes/fragment/4/position = Vector2(-1080, 420)
-nodes/fragment/5/node = SubResource("VisualShaderNodeColorConstant_07mk4")
-nodes/fragment/5/position = Vector2(-1080, 520)
 nodes/fragment/6/node = SubResource("VisualShaderNodeFloatConstant_fgneo")
 nodes/fragment/6/position = Vector2(-700, 440)
 nodes/fragment/7/node = SubResource("VisualShaderNodeSwitch_wr5vb")
@@ -107,4 +109,8 @@ nodes/fragment/14/node = SubResource("VisualShaderNodeCompare_u3eyh")
 nodes/fragment/14/position = Vector2(100, 860)
 nodes/fragment/15/node = SubResource("VisualShaderNodeVectorOp_oyxij")
 nodes/fragment/15/position = Vector2(-900, 760)
-nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 3, 1, 5, 0, 3, 2, 9, 0, 10, 0, 9, 1, 10, 1, 12, 0, 11, 1, 10, 0, 11, 0, 11, 0, 13, 0, 13, 0, 14, 0, 14, 0, 7, 0, 6, 0, 7, 1, 8, 0, 15, 0, 15, 0, 9, 0, 3, 0, 0, 0, 6, 0, 0, 1)
+nodes/fragment/16/node = SubResource("VisualShaderNodeColorParameter_hyejk")
+nodes/fragment/16/position = Vector2(-1300, 400)
+nodes/fragment/17/node = SubResource("VisualShaderNodeColorParameter_uifco")
+nodes/fragment/17/position = Vector2(-1320, 460)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 9, 0, 10, 0, 9, 1, 10, 1, 12, 0, 11, 1, 10, 0, 11, 0, 11, 0, 13, 0, 13, 0, 14, 0, 14, 0, 7, 0, 6, 0, 7, 1, 8, 0, 15, 0, 15, 0, 9, 0, 3, 0, 0, 0, 6, 0, 0, 1, 16, 0, 3, 1, 17, 0, 3, 2)

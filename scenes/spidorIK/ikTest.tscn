@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3p3fr6cu55p3"]
+[gd_scene load_steps=16 format=3 uid="uid://b3p3fr6cu55p3"]
 
 [ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
 [ext_resource type="Script" path="res://scenes/spidorIK/ikSpider.gd" id="1_c15jh"]
 [ext_resource type="PackedScene" uid="uid://bepaluowuy0co" path="res://scenes/spidorIK/spider_leg_selection.tscn" id="2_2uwge"]
+[ext_resource type="PackedScene" uid="uid://bwmtpcc11kyp8" path="res://raycasts.tscn" id="3_r0h5s"]
 [ext_resource type="Shader" uid="uid://c1affo78f5dak" path="res://scenes/spidorIK/ughwhenmakeuniquerecursivedoesnotmakeuniquerecursivethankyougodotgameengineverycoolanduseful.tres" id="6_2unrk"]
 [ext_resource type="Shader" uid="uid://cgk0mrlo428i5" path="res://scenes/spidorIK/planetestmaterial.tres" id="6_idl1e"]
 
@@ -18,16 +19,42 @@ emission_enabled = true
 emission = Color(1, 0.415686, 0, 1)
 emission_energy_multiplier = 7.82
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00plw"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_idl1e")
+shader_parameter/Front_Face_Color = Color(1, 0, 0, 1)
+shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1nnx"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_idl1e")
+shader_parameter/Front_Face_Color = Color(0, 1, 0, 1)
+shader_parameter/Back_Face_Color = Color(0, 1, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qaq5v"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_idl1e")
+shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
+shader_parameter/Back_Face_Color = Color(0, 0, 1, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sb71f"]
 render_priority = 0
 shader = ExtResource("6_2unrk")
+shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
+shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5pv0p"]
 size = Vector2(30, 30)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tpdje"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("6_idl1e")
+shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
+shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_stuur"]
 size = Vector2(30, 30)
@@ -43,6 +70,8 @@ leg_count = 8
 leg_offset = 0.4
 movement_speed = 45.0
 rotation_speed = 5.0
+
+[node name="raycasts2" parent="." instance=ExtResource("3_r0h5s")]
 
 [node name="cam" type="Marker3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -72,7 +101,26 @@ top_level = true
 
 [node name="raycasts" type="Node3D" parent="."]
 
+[node name="CSGTorus3D" type="CSGTorus3D" parent="raycasts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.24593, 0)
+material_override = SubResource("ShaderMaterial_00plw")
+inner_radius = 6.80323
+outer_radius = 7.49025
+
+[node name="CSGTorus3D2" type="CSGTorus3D" parent="raycasts"]
+transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, 2.03156, 0)
+material_override = SubResource("ShaderMaterial_e1nnx")
+inner_radius = 13.0583
+outer_radius = 13.8333
+
+[node name="CSGTorus3D3" type="CSGTorus3D" parent="raycasts"]
+transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, -4.28315, 0)
+material_override = SubResource("ShaderMaterial_qaq5v")
+inner_radius = 23.2733
+outer_radius = 23.852
+
 [node name="TestPlane" type="Marker3D" parent="."]
+visible = false
 
 [node name="NotTestPlaneDontAsk" type="CSGMesh3D" parent="TestPlane"]
 layers = 31

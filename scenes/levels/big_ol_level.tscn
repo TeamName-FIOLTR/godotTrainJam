@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b63d8cw1l0sr5"]
+[gd_scene load_steps=4 format=3 uid="uid://b63d8cw1l0sr5"]
 
 [ext_resource type="PackedScene" uid="uid://deu0i2b5y80e2" path="res://scenes/train/bigoltrainlevel.tscn" id="1_85brr"]
 [ext_resource type="PackedScene" uid="uid://b3p3fr6cu55p3" path="res://scenes/spidorIK/ikTest.tscn" id="2_3lp4n"]
+[ext_resource type="PackedScene" uid="uid://dnjm5s6grex5q" path="res://assets/models/coke_bottle.glb" id="3_oixme"]
 
 [node name="Big Ol Level" type="Node3D"]
 
@@ -9,3 +10,6 @@
 
 [node name="Spidor" parent="." instance=ExtResource("2_3lp4n")]
 transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, -579.116, 1017.88, 631.201)
+
+[node name="coke_bottle" parent="." instance=ExtResource("3_oixme")]
+transform = Transform3D(-0.14767, 0.962862, -0.226034, -0.526623, -0.269996, -0.806084, -0.837175, 0, 0.546935, -733.375, 1068.9, 377.002)
