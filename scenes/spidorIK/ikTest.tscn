@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bmtcnronfxufy" path="res://assets/models/mainspiderthingig.glb" id="1_buafi"]
 [ext_resource type="Script" path="res://scenes/spidorIK/ikSpider.gd" id="1_c15jh"]
 [ext_resource type="PackedScene" uid="uid://bepaluowuy0co" path="res://scenes/spidorIK/spider_leg_selection.tscn" id="2_2uwge"]
-[ext_resource type="PackedScene" uid="uid://bwmtpcc11kyp8" path="res://raycasts.tscn" id="3_r0h5s"]
+[ext_resource type="Script" path="res://scenes/spidorIK/looking_camera.gd" id="3_8ihxf"]
 [ext_resource type="Shader" uid="uid://c1affo78f5dak" path="res://scenes/spidorIK/ughwhenmakeuniquerecursivedoesnotmakeuniquerecursivethankyougodotgameengineverycoolanduseful.tres" id="6_2unrk"]
 [ext_resource type="Shader" uid="uid://cgk0mrlo428i5" path="res://scenes/spidorIK/planetestmaterial.tres" id="6_idl1e"]
 
@@ -18,6 +18,25 @@ albedo_color = Color(1, 0.54902, 0.341176, 1)
 emission_enabled = true
 emission = Color(1, 0.415686, 0, 1)
 emission_energy_multiplier = 7.82
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sb71f"]
+render_priority = 0
+shader = ExtResource("6_2unrk")
+shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
+shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5pv0p"]
+size = Vector2(30, 30)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tpdje"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_idl1e")
+shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
+shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_stuur"]
+size = Vector2(30, 30)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_00plw"]
 resource_local_to_scene = true
@@ -40,97 +59,97 @@ shader = ExtResource("6_idl1e")
 shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
 shader_parameter/Back_Face_Color = Color(0, 0, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sb71f"]
-render_priority = 0
-shader = ExtResource("6_2unrk")
-shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
-shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_5pv0p"]
-size = Vector2(30, 30)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tpdje"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("6_idl1e")
-shader_parameter/Front_Face_Color = Color(0, 0, 1, 1)
-shader_parameter/Back_Face_Color = Color(1, 0, 0, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_stuur"]
-size = Vector2(30, 30)
-
-[node name="Spidor" type="Node3D" node_paths=PackedStringArray("skele", "targets", "raycasts")]
+[node name="Spidor" type="Node3D" node_paths=PackedStringArray("skele", "targets", "raycasts", "raycast_mount", "gimbal_camera", "spidor_rotation")]
 transform = Transform3D(1.00776, 0, 0, 0, 1.00776, 0, 0, 0, 1.00776, 0, 0, 0)
 script = ExtResource("1_c15jh")
-skele = NodePath("mainspiderthingig/Exoskeleton Rig/Skeleton3D")
-targets = NodePath("targets")
-raycasts = NodePath("raycasts")
+skele = NodePath("SpidorRotation/mainspiderthingig/Exoskeleton Rig/Skeleton3D")
+targets = NodePath("SpidorRotation/targets")
+raycasts = NodePath("SpidorRotation/RaycastMount/raycasts")
+raycast_mount = NodePath("SpidorRotation/RaycastMount")
 ik = ExtResource("2_2uwge")
 leg_count = 8
 leg_offset = 0.4
-movement_speed = 45.0
+movement_speed = 90.0
 rotation_speed = 5.0
+gimbal_camera = NodePath("SpidorRotation/cam/pitch/yaw/roll/Camera3D")
+spidor_rotation = NodePath("SpidorRotation")
 
-[node name="raycasts2" parent="." instance=ExtResource("3_r0h5s")]
+[node name="SpidorRotation" type="Node3D" parent="."]
 
-[node name="cam" type="Marker3D" parent="."]
+[node name="cam" type="Marker3D" parent="SpidorRotation"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="cam"]
-transform = Transform3D(-0.97989, 0.155897, -0.0130693, 0.136131, 0.890527, 0.416039, 0.0770915, 0.409043, -0.900777, 0, 15.9609, -31.5657)
+[node name="pitch" type="Marker3D" parent="SpidorRotation/cam"]
+
+[node name="yaw" type="Marker3D" parent="SpidorRotation/cam/pitch"]
+transform = Transform3D(1, -3.55271e-15, -6.15348e-15, 0, 0.866025, -0.5, 7.10543e-15, 0.5, 0.866025, 0, 0, 0)
+
+[node name="roll" type="Marker3D" parent="SpidorRotation/cam/pitch/yaw"]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SpidorRotation/cam/pitch/yaw/roll" node_paths=PackedStringArray("pitch_node", "yaw_node", "roll_node")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.97366e-06, 0, -32)
 current = true
 near = 1.0
 far = 20000.0
+script = ExtResource("3_8ihxf")
+pitch_node = NodePath("../../..")
+yaw_node = NodePath("../..")
+roll_node = NodePath("..")
+camera_distance = 32.0
+gimbal_rotation_degrees = Vector3(0, 30, 0)
 
-[node name="mainspiderthingig" parent="." instance=ExtResource("1_buafi")]
+[node name="mainspiderthingig" parent="SpidorRotation" instance=ExtResource("1_buafi")]
 transform = Transform3D(1.11924, 0, 0, 0, 1.11924, 0, 0, 0, 1.11924, 0, -9.46331e-07, 1.89266e-06)
 
-[node name="8legts" parent="mainspiderthingig/Exoskeleton Rig/Skeleton3D" index="0"]
+[node name="8legts" parent="SpidorRotation/mainspiderthingig/Exoskeleton Rig/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_jktnt")
 surface_material_override/1 = SubResource("StandardMaterial3D_0tj7x")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="mainspiderthingig"]
+[node name="SpotLight3D" type="SpotLight3D" parent="SpidorRotation/mainspiderthingig"]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.96693, -5.47898)
 light_color = Color(1, 0.662745, 0.305882, 1)
 light_energy = 99.0
 spot_range = 69.1276
 spot_angle = 40.8798
 
-[node name="targets" type="Node3D" parent="."]
+[node name="targets" type="Node3D" parent="SpidorRotation"]
 top_level = true
 
-[node name="raycasts" type="Node3D" parent="."]
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="raycasts"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.24593, 0)
-material_override = SubResource("ShaderMaterial_00plw")
-inner_radius = 6.80323
-outer_radius = 7.49025
-
-[node name="CSGTorus3D2" type="CSGTorus3D" parent="raycasts"]
-transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, 2.03156, 0)
-material_override = SubResource("ShaderMaterial_e1nnx")
-inner_radius = 13.0583
-outer_radius = 13.8333
-
-[node name="CSGTorus3D3" type="CSGTorus3D" parent="raycasts"]
-transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, -4.28315, 0)
-material_override = SubResource("ShaderMaterial_qaq5v")
-inner_radius = 23.2733
-outer_radius = 23.852
-
-[node name="TestPlane" type="Marker3D" parent="."]
+[node name="TestPlane" type="Marker3D" parent="SpidorRotation"]
 visible = false
 
-[node name="NotTestPlaneDontAsk" type="CSGMesh3D" parent="TestPlane"]
+[node name="NotTestPlaneDontAsk" type="CSGMesh3D" parent="SpidorRotation/TestPlane"]
 layers = 31
 sorting_offset = 100000.0
 sorting_use_aabb_center = false
 material_override = SubResource("ShaderMaterial_sb71f")
 mesh = SubResource("PlaneMesh_5pv0p")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="TestPlane"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="SpidorRotation/TestPlane"]
 material_override = SubResource("ShaderMaterial_tpdje")
 mesh = SubResource("PlaneMesh_stuur")
 
-[editable path="mainspiderthingig"]
+[node name="RaycastMount" type="Node3D" parent="SpidorRotation"]
+
+[node name="raycasts" type="Node3D" parent="SpidorRotation/RaycastMount"]
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="SpidorRotation/RaycastMount/raycasts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.24593, 0)
+material_override = SubResource("ShaderMaterial_00plw")
+inner_radius = 6.80323
+outer_radius = 7.49025
+
+[node name="CSGTorus3D2" type="CSGTorus3D" parent="SpidorRotation/RaycastMount/raycasts"]
+transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, 2.03156, 0)
+material_override = SubResource("ShaderMaterial_e1nnx")
+inner_radius = 13.0583
+outer_radius = 13.8333
+
+[node name="CSGTorus3D3" type="CSGTorus3D" parent="SpidorRotation/RaycastMount/raycasts"]
+transform = Transform3D(0.998687, 0, -0.0512205, 0, 1, 0, 0.0512205, 0, 0.998687, 0, -4.28315, 0)
+material_override = SubResource("ShaderMaterial_qaq5v")
+inner_radius = 23.2733
+outer_radius = 23.852
+
+[editable path="SpidorRotation/mainspiderthingig"]

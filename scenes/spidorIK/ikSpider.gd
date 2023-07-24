@@ -7,7 +7,8 @@ var originial_transform : Transform3D
 
 @export var skele  : Skeleton3D # 💀 spooky scary
 @export var targets : Node3D 
-@export var raycasts : Node3D
+@export var raycasts : Node3D 
+@export var raycast_mount : Node3D
 @export var ik : PackedScene
 
 @export var left_leg_positions : PackedVector3Array
@@ -26,6 +27,11 @@ var originial_transform : Transform3D
 @export var basis_lerp_speed : float = 10
 @export var target_plane_distance : float = 0.5
 
+@export var gimbal_camera : GimbalCamera
+
+#used to rotate the spidor without interfering with the legs desired plane
+@export var spidor_rotation : Node3D
+
 var average_normal : Vector3 = Vector3.UP
 
 var velocity : Vector3
@@ -37,10 +43,15 @@ var input_rotation : float
 var target_basis : Basis
 var rotation_distance : float = 0.0
 var prev_rotation_distance : float = 0.0
-var rotation_check_threshold : float = .3
+var rotation_check_threshold : float = .01
 var angular_velocity : float = 0
 
+var starting_gimbal_degrees : Vector3
+var starting_camera_distance : float
+var camera_start_tween : Tween
+
 func align_to_average_norm()->void:
+	
 	#global_transform = originial_transform.looking_at(global_position + average_normal)
 	var llp = left_leg_positions
 	var rlp = right_leg_positions
@@ -133,7 +144,7 @@ func add_ik(i,lr):
 	var angle = float(i)/leg_count 
 	angle = remap(angle,0,1,PI/4,2*PI)
 	var offset = leg_offset*PI
-	target.transform.origin.x = cos(angle + offset)*19 * (1 if lr == 'L' else -1)
+	target.transform.origin.x = cos(angle + offset)*19 * (1 if lr == 'L' else -1)*.8
 	target.transform.origin.z = -sin(angle + offset)*19
 
 
@@ -162,6 +173,7 @@ func add_ik(i,lr):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	originial_transform = self.global_transform
+	starting_gimbal_degrees = self.gimbal_camera.gimbal_rotation_degrees
 	left_leg_positions.resize(leg_count/2)
 	right_leg_positions.resize(leg_count/2)
 	for i in range(leg_count / 2):
@@ -170,9 +182,16 @@ func _ready():
 		
 		#right
 		add_ik(i,"R")
+
 func sigmoid(x : float)->float:
 	var ex = exp(x)
-	return ex / (ex + 1)
+	return ex / (ex + 1) 
+	
+func reset_cam()->void:
+	if self.camera_start_tween:
+		self.camera_start_tween.kill() 
+	self.camera_start_tween = self.create_tween()
+	self.camera_start_tween.tween_property(gimbal_camera,"gimbal_rotation_degrees",starting_gimbal_degrees,10/60.0)
 func _physics_process(delta):
 	var dist = get_average_distance_to_plane()
 	global_transform.origin += global_transform.basis * Vector3.UP * (target_plane_distance - dist) * delta * 5
@@ -180,17 +199,27 @@ func _physics_process(delta):
 	velocity = prev_position - global_position
 	angular_velocity = rotation_distance - prev_rotation_distance
 	prev_position = global_position 
-	if rotation_distance > rotation_check_threshold*1.2:
+	if abs(rotation_distance) > rotation_check_threshold*1.1:
 		rotation_distance = 0
-func _process(delta):
-	global_position += global_transform.basis*(Vector3(input_movement.x,0.0,input_movement.y)*delta*movement_speed)
+		prev_rotation_distance = 0
 	prev_rotation_distance = rotation_distance
 	rotation_distance += input_rotation * delta 
-	target_basis = target_basis.rotated(target_basis.y,input_rotation*delta*rotation_speed)
-	var local_velocity = (global_transform.basis.inverse()*velocity).normalized()
-	raycasts.rotation.z = -(sigmoid(local_velocity.x) - 0.5)*2
-	raycasts.rotation.x = -(sigmoid(-local_velocity.z) - 0.5)*2
+	spidor_rotation.rotation.y += input_rotation*delta*rotation_speed
+
+
+	var local_velocity = (spidor_rotation.global_transform.basis.inverse()*velocity).normalized()
+	raycast_mount.rotation.z = -(sigmoid(local_velocity.x) - 0.5)*2
+	raycast_mount.rotation.x = -(sigmoid(-local_velocity.z) - 0.5)*2
+	raycasts.rotation.y = (sigmoid(80*angular_velocity)-0.5)*PI/2
+	global_position += spidor_rotation.global_transform.basis*(Vector3(input_movement.x,0.0,input_movement.y)*delta*movement_speed)
+
+func _process(delta):
+	var input_camera_vectory = 90*delta*(Input.get_vector("camera_left","camera_right","camera_up","camera_down"))
+	gimbal_camera.gimbal_rotation_degrees += Vector3(input_camera_vectory.x,input_camera_vectory.y, 0.0)
+
 func _input(event):
 	var input_vec = Input.get_vector("leftwards","rightwards","forwards","backwards")
 	input_movement = input_vec
-	input_rotation = Input.get_axis("turn_rightwards","turn_leftwards")
+	input_rotation = Input.get_axis("turn_rightwards","turn_leftwards") 
+	if event.is_action_pressed("reset_cam"):
+		reset_cam()
